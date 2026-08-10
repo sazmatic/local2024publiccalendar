@@ -24,94 +24,189 @@
     body {
       font-family: "Inter", sans-serif;
       background-color: #f6f8fc;
+
       background-image:
         radial-gradient(
           circle at 1px 1px,
           rgba(15, 23, 42, 0.035) 1px,
           transparent 0
         );
+
       background-size: 26px 26px;
     }
 
-    /* ANNOUNCEMENT */
 
-    .announcement-bar {
-      background:
-        linear-gradient(
-          90deg,
-          #1d4ed8,
-          #2563eb,
-          #1d4ed8
-        );
+    /* =========================
+       MOVING ANNOUNCEMENT
+    ========================= */
+
+    .announcement-wrap {
+      margin-top: 20px;
+      overflow: hidden;
+      border-radius: 14px;
+
+      background: rgba(37, 99, 235, 0.2);
+
+      border:
+        1px solid rgba(147, 197, 253, 0.18);
     }
 
-    /* GOOGLE CALENDAR */
+    .announcement-track {
+      display: flex;
+      width: max-content;
+
+      animation:
+        announcementScroll 20s linear infinite;
+    }
+
+    .announcement-item {
+      flex-shrink: 0;
+
+      padding:
+        10px 42px;
+
+      color: #dbeafe;
+
+      font-size: 13px;
+      font-weight: 600;
+
+      white-space: nowrap;
+    }
+
+    .announcement-item strong {
+      color: white;
+      font-weight: 800;
+    }
+
+    @keyframes announcementScroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .announcement-track {
+        animation: none;
+      }
+    }
+
+
+    /* =========================
+       GOOGLE CALENDAR
+    ========================= */
 
     .calendar-frame {
       width: 100%;
       height: 760px;
+
       border: 0;
+
       display: block;
     }
+
+
+    /* LOADING SCREEN */
 
     .calendar-loader {
       position: absolute;
       inset: 0;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       background: white;
+
       z-index: 5;
-      transition: opacity 0.35s ease;
+
+      transition:
+        opacity 0.35s ease;
     }
 
     .calendar-loader.loaded {
       opacity: 0;
+
       pointer-events: none;
     }
+
+
+    /* SPINNER */
 
     .spinner {
       width: 36px;
       height: 36px;
-      border: 3px solid #dbeafe;
-      border-top-color: #2563eb;
-      border-radius: 9999px;
-      animation: spin 0.8s linear infinite;
+
+      border:
+        3px solid #dbeafe;
+
+      border-top-color:
+        #2563eb;
+
+      border-radius:
+        9999px;
+
+      animation:
+        spin 0.8s linear infinite;
     }
 
     @keyframes spin {
       to {
-        transform: rotate(360deg);
+        transform:
+          rotate(360deg);
       }
     }
 
-    /* CALENDAR TABS */
+
+    /* =========================
+       CALENDAR TABS
+    ========================= */
 
     .tab-active {
-      background: #0b2a5b;
-      color: white;
-      box-shadow: 0 8px 20px rgba(11, 42, 91, 0.15);
+      background:
+        #0b2a5b;
+
+      color:
+        white;
+
+      box-shadow:
+        0 8px 20px
+        rgba(11, 42, 91, 0.15);
     }
 
-    /* CALENDAR SWITCH ANIMATION */
+
+    /* =========================
+       CALENDAR ANIMATION
+    ========================= */
 
     .calendar-panel {
-      animation: calendarFade 0.3s ease;
+      animation:
+        calendarFade 0.3s ease;
     }
 
     @keyframes calendarFade {
       from {
         opacity: 0;
-        transform: translateY(5px);
+
+        transform:
+          translateY(5px);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+          translateY(0);
       }
     }
 
-    /* CALENDAR ACCENT */
+
+    /* =========================
+       CALENDAR TOP ACCENT
+    ========================= */
 
     .calendar-glow {
       position: relative;
@@ -119,12 +214,17 @@
 
     .calendar-glow::before {
       content: "";
+
       position: absolute;
+
       top: -1px;
       left: 8%;
+
       width: 84%;
       height: 3px;
-      border-radius: 9999px;
+
+      border-radius:
+        9999px;
 
       background:
         linear-gradient(
@@ -137,7 +237,10 @@
       z-index: 10;
     }
 
-    /* TABLE CARD */
+
+    /* =========================
+       TABLE WITH US
+    ========================= */
 
     .table-card {
       transition:
@@ -146,11 +249,18 @@
     }
 
     .table-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 20px 55px rgba(15, 23, 42, 0.16);
+      transform:
+        translateY(-3px);
+
+      box-shadow:
+        0 20px 55px
+        rgba(15, 23, 42, 0.16);
     }
 
-    /* BACK TO TOP */
+
+    /* =========================
+       BACK TO TOP
+    ========================= */
 
     #backToTop {
       transition:
@@ -159,7 +269,10 @@
         background-color 0.2s ease;
     }
 
-    /* MOBILE CALENDAR SHIELD */
+
+    /* =========================
+       MOBILE CALENDAR SHIELD
+    ========================= */
 
     .calendar-shield {
       display: none;
@@ -173,134 +286,222 @@
       display: none;
     }
 
+
     @media (max-width: 640px) {
 
-      .calendar-frame {
-        height: 650px;
+      .announcement-wrap {
+        margin-top: 16px;
       }
+
+      .announcement-item {
+        padding:
+          9px 32px;
+
+        font-size:
+          12px;
+      }
+
+
+      .calendar-frame {
+        height:
+          650px;
+      }
+
 
       .calendar-tabs {
-        position: sticky;
-        top: 10px;
-        z-index: 30;
+        position:
+          sticky;
 
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        top:
+          10px;
+
+        z-index:
+          30;
+
+        backdrop-filter:
+          blur(12px);
+
+        -webkit-backdrop-filter:
+          blur(12px);
       }
+
 
       .calendar-mobile-wrapper {
-        position: relative;
+        position:
+          relative;
       }
 
-      /*
-        Transparent shield completely covers
-        Google Calendar on mobile.
 
-        Swiping scrolls the webpage instead
-        of getting trapped inside the iframe.
+      /*
+        Transparent layer over the entire
+        Google Calendar on mobile.
       */
 
       .calendar-shield {
-        display: block;
-        position: absolute;
-        inset: 0;
-        z-index: 20;
-        background: transparent;
+        display:
+          block;
 
-        touch-action: pan-y;
+        position:
+          absolute;
 
-        -webkit-user-select: none;
-        user-select: none;
+        inset:
+          0;
 
-        -webkit-tap-highlight-color: transparent;
+        z-index:
+          20;
+
+        background:
+          transparent;
+
+        touch-action:
+          pan-y;
+
+        -webkit-user-select:
+          none;
+
+        user-select:
+          none;
+
+        -webkit-tap-highlight-color:
+          transparent;
       }
 
+
       /*
-        Remove shield after user taps
-        to interact with Google Calendar.
+        Remove shield once calendar
+        interaction is enabled.
       */
 
       .calendar-mobile-wrapper.calendar-active
       .calendar-shield {
-        opacity: 0;
-        pointer-events: none;
+        opacity:
+          0;
+
+        pointer-events:
+          none;
       }
 
-      /*
-        Small floating calendar-use indicator.
-      */
+
+      /* TAP TO USE CALENDAR PILL */
 
       .calendar-use-hint {
-        display: inline-flex;
+        display:
+          inline-flex;
 
-        position: absolute;
+        position:
+          absolute;
 
-        top: 14px;
-        left: 50%;
+        top:
+          14px;
 
-        transform: translateX(-50%);
+        left:
+          50%;
 
-        align-items: center;
-        gap: 7px;
+        transform:
+          translateX(-50%);
 
-        padding: 10px 15px;
+        align-items:
+          center;
 
-        border-radius: 9999px;
+        gap:
+          7px;
 
-        background: rgba(11, 42, 91, 0.94);
-        color: white;
+        padding:
+          10px 15px;
 
-        font-size: 12px;
-        font-weight: 800;
+        border-radius:
+          9999px;
 
-        white-space: nowrap;
+        background:
+          rgba(11, 42, 91, 0.94);
 
-        pointer-events: none;
+        color:
+          white;
+
+        font-size:
+          12px;
+
+        font-weight:
+          800;
+
+        white-space:
+          nowrap;
+
+        pointer-events:
+          none;
 
         box-shadow:
-          0 8px 24px rgba(15, 23, 42, 0.25);
+          0 8px 24px
+          rgba(15, 23, 42, 0.25);
 
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter:
+          blur(8px);
+
+        -webkit-backdrop-filter:
+          blur(8px);
       }
 
+
       /*
-        Fixed Done button so users can always
-        exit calendar interaction mode.
+        Fixed Done button so users
+        can escape calendar interaction.
       */
 
       #calendarDoneButton.visible {
-        display: flex;
+        display:
+          flex;
 
-        position: fixed;
+        position:
+          fixed;
 
-        left: 50%;
-        bottom: 24px;
+        left:
+          50%;
 
-        transform: translateX(-50%);
+        bottom:
+          24px;
 
-        z-index: 9999;
+        transform:
+          translateX(-50%);
 
-        align-items: center;
-        justify-content: center;
-        gap: 7px;
+        z-index:
+          9999;
 
-        padding: 12px 20px;
+        align-items:
+          center;
 
-        border-radius: 9999px;
+        justify-content:
+          center;
 
-        background: #071d49;
-        color: white;
+        gap:
+          7px;
 
-        font-size: 13px;
-        font-weight: 800;
+        padding:
+          12px 20px;
 
-        white-space: nowrap;
+        border-radius:
+          9999px;
 
-        border: 2px solid white;
+        background:
+          #071d49;
+
+        color:
+          white;
+
+        font-size:
+          13px;
+
+        font-weight:
+          800;
+
+        white-space:
+          nowrap;
+
+        border:
+          2px solid white;
 
         box-shadow:
-          0 12px 35px rgba(15, 23, 42, 0.35);
+          0 12px 35px
+          rgba(15, 23, 42, 0.35);
       }
     }
   </style>
@@ -310,67 +511,9 @@
 <body class="text-slate-900">
 
 
-  <!-- ANNOUNCEMENT BAR -->
-
-  <div class="announcement-bar text-white">
-
-    <div
-      class="
-        max-w-7xl
-        mx-auto
-        px-4
-        sm:px-8
-        py-3
-        flex
-        items-center
-        justify-center
-        gap-2
-        text-center
-      "
-    >
-
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="17"
-        height="17"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.2"
-        class="shrink-0 hidden sm:block"
-      >
-        <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2Z"></path>
-        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
-      </svg>
-
-      <p
-        class="
-          text-[13px]
-          sm:text-sm
-          font-medium
-          leading-snug
-        "
-      >
-
-        <span class="font-extrabold">
-          TA Ratification Vote:
-        </span>
-
-        Cast your ballot by
-
-        <span class="font-extrabold">
-          Thursday, August 20 at 11:00 AM ET.
-        </span>
-
-      </p>
-
-    </div>
-
-  </div>
-
-
-
-  <!-- HEADER -->
+  <!-- =========================
+       HEADER
+  ========================= -->
 
   <header
     class="
@@ -380,6 +523,8 @@
       text-white
     "
   >
+
+    <!-- GLOW -->
 
     <div
       class="
@@ -416,10 +561,15 @@
         mx-auto
         px-5
         sm:px-8
-        py-6
-        sm:py-8
+        pt-6
+        sm:pt-8
+        pb-5
+        sm:pb-6
       "
     >
+
+
+      <!-- HEADER ROW -->
 
       <div
         class="
@@ -498,6 +648,7 @@
             stroke="currentColor"
             stroke-width="2"
           >
+
             <path
               d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
             ></path>
@@ -511,6 +662,7 @@
             <path
               d="M19 8v6M22 11h-6"
             ></path>
+
           </svg>
 
 
@@ -526,13 +678,68 @@
 
       </div>
 
+
+
+      <!-- =========================
+           MOVING ANNOUNCEMENT
+      ========================= -->
+
+      <div class="announcement-wrap">
+
+        <div class="announcement-track">
+
+
+          <!-- COPY 1 -->
+
+          <div class="announcement-item">
+
+            🗳️
+
+            <strong>
+              TA Ratification Vote:
+            </strong>
+
+            Cast your ballot by
+
+            <strong>
+              Thursday, August 20 at 11:00 AM ET
+            </strong>
+
+          </div>
+
+
+          <!-- COPY 2 FOR SEAMLESS LOOP -->
+
+          <div class="announcement-item">
+
+            🗳️
+
+            <strong>
+              TA Ratification Vote:
+            </strong>
+
+            Cast your ballot by
+
+            <strong>
+              Thursday, August 20 at 11:00 AM ET
+            </strong>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
     </div>
 
   </header>
 
 
 
-  <!-- MAIN -->
+  <!-- =========================
+       MAIN
+  ========================= -->
 
   <main
     class="
@@ -546,7 +753,9 @@
   >
 
 
-    <!-- CALENDAR -->
+    <!-- =========================
+         CALENDAR
+    ========================= -->
 
     <section>
 
@@ -577,6 +786,8 @@
           >
 
 
+            <!-- CALENDAR ICON -->
+
             <div
               class="
                 w-10
@@ -600,7 +811,10 @@
                 stroke="currentColor"
                 stroke-width="2"
               >
-                <path d="M8 2v4M16 2v4"></path>
+
+                <path
+                  d="M8 2v4M16 2v4"
+                ></path>
 
                 <rect
                   width="18"
@@ -610,7 +824,10 @@
                   rx="2"
                 ></rect>
 
-                <path d="M3 10h18"></path>
+                <path
+                  d="M3 10h18"
+                ></path>
+
               </svg>
 
             </div>
@@ -709,7 +926,9 @@
 
 
 
-      <!-- CALENDAR CARD -->
+      <!-- =========================
+           CALENDAR CARD
+      ========================= -->
 
       <div
         class="
@@ -770,7 +989,10 @@
                 stroke="currentColor"
                 stroke-width="2"
               >
-                <path d="M8 2v4M16 2v4"></path>
+
+                <path
+                  d="M8 2v4M16 2v4"
+                ></path>
 
                 <rect
                   width="18"
@@ -780,7 +1002,10 @@
                   rx="2"
                 ></rect>
 
-                <path d="M3 10h18"></path>
+                <path
+                  d="M3 10h18"
+                ></path>
+
               </svg>
 
             </div>
@@ -840,7 +1065,9 @@
 
 
 
-        <!-- UPCOMING CALENDAR -->
+        <!-- =========================
+             UPCOMING CALENDAR
+        ========================= -->
 
         <div
           id="agendaCalendar"
@@ -859,7 +1086,9 @@
             aria-label="Tap to interact with calendar"
           >
 
-            <div class="calendar-use-hint">
+            <div
+              class="calendar-use-hint"
+            >
 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -870,6 +1099,7 @@
                 stroke="currentColor"
                 stroke-width="2"
               >
+
                 <path
                   d="M9 11V6a2 2 0 0 1 4 0v5"
                 ></path>
@@ -881,6 +1111,7 @@
                 <path
                   d="M17 10V7a2 2 0 0 1 4 0v7a8 8 0 0 1-8 8h-1"
                 ></path>
+
               </svg>
 
               Tap to use calendar
@@ -906,6 +1137,7 @@
                   mx-auto
                 "
               ></div>
+
 
               <p
                 class="
@@ -938,7 +1170,9 @@
 
 
 
-        <!-- FULL MONTH CALENDAR -->
+        <!-- =========================
+             FULL MONTH CALENDAR
+        ========================= -->
 
         <div
           id="monthCalendar"
@@ -957,7 +1191,9 @@
             aria-label="Tap to interact with calendar"
           >
 
-            <div class="calendar-use-hint">
+            <div
+              class="calendar-use-hint"
+            >
 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -968,6 +1204,7 @@
                 stroke="currentColor"
                 stroke-width="2"
               >
+
                 <path
                   d="M9 11V6a2 2 0 0 1 4 0v5"
                 ></path>
@@ -979,6 +1216,7 @@
                 <path
                   d="M17 10V7a2 2 0 0 1 4 0v7a8 8 0 0 1-8 8h-1"
                 ></path>
+
               </svg>
 
               Tap to use calendar
@@ -1004,6 +1242,7 @@
                   mx-auto
                 "
               ></div>
+
 
               <p
                 class="
@@ -1040,7 +1279,9 @@
 
 
 
-    <!-- TABLE WITH US -->
+    <!-- =========================
+         TABLE WITH US
+    ========================= -->
 
     <section
       class="
@@ -1183,9 +1424,11 @@
               stroke="currentColor"
               stroke-width="2"
             >
+
               <path
                 d="m9 18 6-6-6-6"
               ></path>
+
             </svg>
 
           </a>
@@ -1200,7 +1443,9 @@
 
 
 
-  <!-- FOOTER -->
+  <!-- =========================
+       FOOTER
+  ========================= -->
 
   <footer
     class="
@@ -1288,7 +1533,6 @@
             "
           >
 
-
             <a
               href="https://www.facebook.com/share/g/1AxqftZkxu/?mibextid=wwXIfr"
               target="_blank"
@@ -1309,7 +1553,6 @@
             >
               Facebook
             </a>
-
 
 
             <a
@@ -1372,7 +1615,9 @@
 
 
 
-  <!-- CALENDAR DONE BUTTON -->
+  <!-- =========================
+       MOBILE CALENDAR DONE BUTTON
+  ========================= -->
 
   <button
     id="calendarDoneButton"
@@ -1389,9 +1634,11 @@
       stroke="currentColor"
       stroke-width="2.5"
     >
+
       <path
         d="m5 12 4 4L19 6"
       ></path>
+
     </svg>
 
     Done
@@ -1400,7 +1647,9 @@
 
 
 
-  <!-- BACK TO TOP -->
+  <!-- =========================
+       BACK TO TOP
+  ========================= -->
 
   <button
     id="backToTop"
@@ -1437,16 +1686,20 @@
       stroke="currentColor"
       stroke-width="2"
     >
+
       <path
         d="m18 15-6-6-6 6"
       ></path>
+
     </svg>
 
   </button>
 
 
 
-  <!-- JAVASCRIPT -->
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
 
   <script>
 
@@ -1475,7 +1728,9 @@
       document.getElementById("calendarDoneButton");
 
 
-    /* CALENDAR ANIMATION */
+    /* =========================
+       CALENDAR ANIMATION
+    ========================= */
 
     function restartAnimation(element) {
 
@@ -1492,7 +1747,9 @@
     }
 
 
-    /* ACTIVATE MOBILE CALENDAR */
+    /* =========================
+       ENABLE MOBILE CALENDAR
+    ========================= */
 
     function enableCalendarInteraction(wrapper) {
 
@@ -1517,12 +1774,15 @@
       );
 
 
-      backToTop.style.display = "none";
+      backToTop.style.display =
+        "none";
 
     }
 
 
-    /* EXIT MOBILE CALENDAR */
+    /* =========================
+       DISABLE MOBILE CALENDAR
+    ========================= */
 
     function disableCalendarInteraction() {
 
@@ -1542,12 +1802,15 @@
       );
 
 
-      backToTop.style.display = "";
+      backToTop.style.display =
+        "";
 
     }
 
 
-    /* MOBILE SHIELD TAP DETECTION */
+    /* =========================
+       MOBILE SHIELD TAP DETECTION
+    ========================= */
 
     document
       .querySelectorAll(".calendar-shield")
@@ -1555,6 +1818,7 @@
 
         let startX = 0;
         let startY = 0;
+
         let moved = false;
 
 
@@ -1562,10 +1826,14 @@
           "pointerdown",
           (event) => {
 
-            startX = event.clientX;
-            startY = event.clientY;
+            startX =
+              event.clientX;
 
-            moved = false;
+            startY =
+              event.clientY;
+
+            moved =
+              false;
 
           }
         );
@@ -1591,7 +1859,8 @@
               distanceY > 8
             ) {
 
-              moved = true;
+              moved =
+                true;
 
             }
 
@@ -1623,7 +1892,9 @@
       });
 
 
-    /* SWITCH CALENDAR VIEW */
+    /* =========================
+       SWITCH CALENDAR VIEW
+    ========================= */
 
     function showCalendar(type) {
 
@@ -1719,7 +1990,9 @@
     }
 
 
-    /* CALENDAR LOADER */
+    /* =========================
+       CALENDAR LOADER
+    ========================= */
 
     function calendarLoaded(loaderId) {
 
@@ -1740,7 +2013,9 @@
     }
 
 
-    /* YEAR */
+    /* =========================
+       YEAR
+    ========================= */
 
     document
       .getElementById("year")
@@ -1748,7 +2023,9 @@
       new Date().getFullYear();
 
 
-    /* BACK TO TOP */
+    /* =========================
+       BACK TO TOP
+    ========================= */
 
     window.addEventListener(
       "scroll",
