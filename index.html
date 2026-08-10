@@ -22,45 +22,30 @@
     }
 
     body {
-      <!-- ANNOUNCEMENT BAR -->
-<div
-  class="
-    bg-blue-600
-    text-white
-    text-center
-    px-4
-    py-3
-    text-sm
-    sm:text-base
-    font-semibold
-  "
->
-  <span class="font-extrabold">
-    TA Vote Deadline:
-  </span>
-
-  Cast your vote by
-  <span class="font-extrabold">
-    Thursday, August 20 at 11:00 AM ET.
-  </span>
-</div>
       font-family: "Inter", sans-serif;
       background-color: #f6f8fc;
-
       background-image:
         radial-gradient(
           circle at 1px 1px,
           rgba(15, 23, 42, 0.035) 1px,
           transparent 0
         );
-
       background-size: 26px 26px;
     }
 
+    /* ANNOUNCEMENT */
 
-    /* =========================
-       GOOGLE CALENDAR
-    ========================= */
+    .announcement-bar {
+      background:
+        linear-gradient(
+          90deg,
+          #1d4ed8,
+          #2563eb,
+          #1d4ed8
+        );
+    }
+
+    /* GOOGLE CALENDAR */
 
     .calendar-frame {
       width: 100%;
@@ -68,9 +53,6 @@
       border: 0;
       display: block;
     }
-
-
-    /* LOADING SCREEN */
 
     .calendar-loader {
       position: absolute;
@@ -103,17 +85,13 @@
       }
     }
 
-
-    /* CALENDAR VIEW TOGGLE */
+    /* CALENDAR TABS */
 
     .tab-active {
       background: #0b2a5b;
       color: white;
-
-      box-shadow:
-        0 8px 20px rgba(11, 42, 91, 0.15);
+      box-shadow: 0 8px 20px rgba(11, 42, 91, 0.15);
     }
-
 
     /* CALENDAR SWITCH ANIMATION */
 
@@ -133,8 +111,7 @@
       }
     }
 
-
-    /* BLUE ACCENT */
+    /* CALENDAR ACCENT */
 
     .calendar-glow {
       position: relative;
@@ -160,10 +137,7 @@
       z-index: 10;
     }
 
-
-    /* =========================
-       TABLE WITH US
-    ========================= */
+    /* TABLE CARD */
 
     .table-card {
       transition:
@@ -173,15 +147,10 @@
 
     .table-card:hover {
       transform: translateY(-3px);
-
-      box-shadow:
-        0 20px 55px rgba(15, 23, 42, 0.16);
+      box-shadow: 0 20px 55px rgba(15, 23, 42, 0.16);
     }
 
-
-    /* =========================
-       BACK TO TOP
-    ========================= */
+    /* BACK TO TOP */
 
     #backToTop {
       transition:
@@ -190,21 +159,7 @@
         background-color 0.2s ease;
     }
 
-
-    /* =========================
-       MOBILE CALENDAR SHIELD
-    ========================= */
-
-    /*
-      Hidden on desktop.
-
-      On iPhone/mobile, this transparent layer
-      PHYSICALLY sits over Google Calendar.
-
-      That means Safari never receives the
-      swipe inside the iframe unless the user
-      intentionally activates the calendar.
-    */
+    /* MOBILE CALENDAR SHIELD */
 
     .calendar-shield {
       display: none;
@@ -218,15 +173,11 @@
       display: none;
     }
 
-
     @media (max-width: 640px) {
 
       .calendar-frame {
         height: 650px;
       }
-
-
-      /* Sticky Upcoming / Full Calendar controls */
 
       .calendar-tabs {
         position: sticky;
@@ -237,32 +188,25 @@
         -webkit-backdrop-filter: blur(12px);
       }
 
-
       .calendar-mobile-wrapper {
         position: relative;
       }
 
-
       /*
-        THIS IS THE IMPORTANT PART.
+        Transparent shield completely covers
+        Google Calendar on mobile.
 
-        The shield covers every pixel of the iframe.
+        Swiping scrolls the webpage instead
+        of getting trapped inside the iframe.
       */
 
       .calendar-shield {
         display: block;
-
         position: absolute;
         inset: 0;
-
         z-index: 20;
-
         background: transparent;
 
-        /*
-          Tell Safari vertical gestures here
-          belong to normal browser scrolling.
-        */
         touch-action: pan-y;
 
         -webkit-user-select: none;
@@ -271,10 +215,9 @@
         -webkit-tap-highlight-color: transparent;
       }
 
-
       /*
-        When calendar mode is activated,
-        remove the shield.
+        Remove shield after user taps
+        to interact with Google Calendar.
       */
 
       .calendar-mobile-wrapper.calendar-active
@@ -283,11 +226,8 @@
         pointer-events: none;
       }
 
-
       /*
-        Small visual reminder at the top.
-        It DOES NOT block scrolling separately.
-        It's inside the shield.
+        Small floating calendar-use indicator.
       */
 
       .calendar-use-hint {
@@ -324,13 +264,9 @@
         -webkit-backdrop-filter: blur(8px);
       }
 
-
       /*
-        Once the calendar is activated,
-        this button stays FIXED on the phone.
-
-        So there is always an escape button
-        even if Google Calendar itself scrolls.
+        Fixed Done button so users can always
+        exit calendar interaction mode.
       */
 
       #calendarDoneButton.visible {
@@ -367,7 +303,6 @@
           0 12px 35px rgba(15, 23, 42, 0.35);
       }
     }
-
   </style>
 </head>
 
@@ -375,9 +310,67 @@
 <body class="text-slate-900">
 
 
-  <!-- =========================
-       HEADER
-  ========================= -->
+  <!-- ANNOUNCEMENT BAR -->
+
+  <div class="announcement-bar text-white">
+
+    <div
+      class="
+        max-w-7xl
+        mx-auto
+        px-4
+        sm:px-8
+        py-3
+        flex
+        items-center
+        justify-center
+        gap-2
+        text-center
+      "
+    >
+
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="17"
+        height="17"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        class="shrink-0 hidden sm:block"
+      >
+        <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2Z"></path>
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+      </svg>
+
+      <p
+        class="
+          text-[13px]
+          sm:text-sm
+          font-medium
+          leading-snug
+        "
+      >
+
+        <span class="font-extrabold">
+          TA Ratification Vote:
+        </span>
+
+        Cast your ballot by
+
+        <span class="font-extrabold">
+          Thursday, August 20 at 11:00 AM ET.
+        </span>
+
+      </p>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- HEADER -->
 
   <header
     class="
@@ -539,9 +532,7 @@
 
 
 
-  <!-- =========================
-       MAIN
-  ========================= -->
+  <!-- MAIN -->
 
   <main
     class="
@@ -555,9 +546,7 @@
   >
 
 
-    <!-- =========================
-         CALENDAR
-    ========================= -->
+    <!-- CALENDAR -->
 
     <section>
 
@@ -587,8 +576,6 @@
             "
           >
 
-
-            <!-- ICON -->
 
             <div
               class="
@@ -722,9 +709,7 @@
 
 
 
-      <!-- =========================
-           CALENDAR CARD
-      ========================= -->
+      <!-- CALENDAR CARD -->
 
       <div
         class="
@@ -855,9 +840,7 @@
 
 
 
-        <!-- =========================
-             UPCOMING CALENDAR
-        ========================= -->
+        <!-- UPCOMING CALENDAR -->
 
         <div
           id="agendaCalendar"
@@ -876,9 +859,7 @@
             aria-label="Tap to interact with calendar"
           >
 
-            <div
-              class="calendar-use-hint"
-            >
+            <div class="calendar-use-hint">
 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -957,9 +938,7 @@
 
 
 
-        <!-- =========================
-             FULL MONTH CALENDAR
-        ========================= -->
+        <!-- FULL MONTH CALENDAR -->
 
         <div
           id="monthCalendar"
@@ -978,9 +957,7 @@
             aria-label="Tap to interact with calendar"
           >
 
-            <div
-              class="calendar-use-hint"
-            >
+            <div class="calendar-use-hint">
 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1063,9 +1040,7 @@
 
 
 
-    <!-- =========================
-         TABLE WITH US
-    ========================= -->
+    <!-- TABLE WITH US -->
 
     <section
       class="
@@ -1225,9 +1200,7 @@
 
 
 
-  <!-- =========================
-       FOOTER
-  ========================= -->
+  <!-- FOOTER -->
 
   <footer
     class="
@@ -1316,8 +1289,6 @@
           >
 
 
-            <!-- FACEBOOK -->
-
             <a
               href="https://www.facebook.com/share/g/1AxqftZkxu/?mibextid=wwXIfr"
               target="_blank"
@@ -1340,8 +1311,6 @@
             </a>
 
 
-
-            <!-- EMAIL -->
 
             <a
               href="mailto:NFN@JC43.org"
@@ -1403,10 +1372,7 @@
 
 
 
-  <!-- =========================
-       CALENDAR DONE BUTTON
-       MOBILE ONLY
-  ========================= -->
+  <!-- CALENDAR DONE BUTTON -->
 
   <button
     id="calendarDoneButton"
@@ -1434,9 +1400,7 @@
 
 
 
-  <!-- =========================
-       BACK TO TOP
-  ========================= -->
+  <!-- BACK TO TOP -->
 
   <button
     id="backToTop"
@@ -1482,9 +1446,7 @@
 
 
 
-  <!-- =========================
-       JAVASCRIPT
-  ========================= -->
+  <!-- JAVASCRIPT -->
 
   <script>
 
@@ -1513,9 +1475,7 @@
       document.getElementById("calendarDoneButton");
 
 
-    /* =========================
-       CALENDAR ANIMATION
-    ========================= */
+    /* CALENDAR ANIMATION */
 
     function restartAnimation(element) {
 
@@ -1532,15 +1492,9 @@
     }
 
 
-    /* =========================
-       ACTIVATE MOBILE CALENDAR
-    ========================= */
+    /* ACTIVATE MOBILE CALENDAR */
 
     function enableCalendarInteraction(wrapper) {
-
-      /*
-        Only one calendar can be active.
-      */
 
       document
         .querySelectorAll(".calendar-mobile-wrapper")
@@ -1563,19 +1517,12 @@
       );
 
 
-      /*
-        Hide back-to-top while using calendar
-        so the buttons don't overlap.
-      */
-
       backToTop.style.display = "none";
 
     }
 
 
-    /* =========================
-       EXIT MOBILE CALENDAR
-    ========================= */
+    /* EXIT MOBILE CALENDAR */
 
     function disableCalendarInteraction() {
 
@@ -1600,20 +1547,7 @@
     }
 
 
-    /* =========================
-       MOBILE SHIELD TAP DETECTION
-    ========================= */
-
-    /*
-      IMPORTANT:
-
-      A vertical swipe should scroll the page.
-
-      A simple tap activates Google Calendar.
-
-      We track finger movement so a swipe
-      doesn't accidentally activate it.
-    */
+    /* MOBILE SHIELD TAP DETECTION */
 
     document
       .querySelectorAll(".calendar-shield")
@@ -1669,11 +1603,6 @@
           "pointerup",
           () => {
 
-            /*
-              Only activate if this was
-              actually a TAP, not a swipe.
-            */
-
             if (!moved) {
 
               const wrapper =
@@ -1694,9 +1623,7 @@
       });
 
 
-    /* =========================
-       SWITCH CALENDAR VIEW
-    ========================= */
+    /* SWITCH CALENDAR VIEW */
 
     function showCalendar(type) {
 
@@ -1792,9 +1719,7 @@
     }
 
 
-    /* =========================
-       CALENDAR LOADER
-    ========================= */
+    /* CALENDAR LOADER */
 
     function calendarLoaded(loaderId) {
 
@@ -1815,9 +1740,7 @@
     }
 
 
-    /* =========================
-       YEAR
-    ========================= */
+    /* YEAR */
 
     document
       .getElementById("year")
@@ -1825,9 +1748,7 @@
       new Date().getFullYear();
 
 
-    /* =========================
-       BACK TO TOP
-    ========================= */
+    /* BACK TO TOP */
 
     window.addEventListener(
       "scroll",
