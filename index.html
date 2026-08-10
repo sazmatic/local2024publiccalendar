@@ -129,7 +129,6 @@
 
     .calendar-loader.loaded {
       opacity: 0;
-
       pointer-events: none;
     }
 
@@ -140,14 +139,11 @@
       width: 36px;
       height: 36px;
 
-      border:
-        3px solid #dbeafe;
+      border: 3px solid #dbeafe;
 
-      border-top-color:
-        #2563eb;
+      border-top-color: #2563eb;
 
-      border-radius:
-        9999px;
+      border-radius: 9999px;
 
       animation:
         spin 0.8s linear infinite;
@@ -155,8 +151,7 @@
 
     @keyframes spin {
       to {
-        transform:
-          rotate(360deg);
+        transform: rotate(360deg);
       }
     }
 
@@ -166,15 +161,11 @@
     ========================= */
 
     .tab-active {
-      background:
-        #0b2a5b;
-
-      color:
-        white;
+      background: #0b2a5b;
+      color: white;
 
       box-shadow:
-        0 8px 20px
-        rgba(11, 42, 91, 0.15);
+        0 8px 20px rgba(11, 42, 91, 0.15);
     }
 
 
@@ -223,8 +214,7 @@
       width: 84%;
       height: 3px;
 
-      border-radius:
-        9999px;
+      border-radius: 9999px;
 
       background:
         linear-gradient(
@@ -249,12 +239,10 @@
     }
 
     .table-card:hover {
-      transform:
-        translateY(-3px);
+      transform: translateY(-3px);
 
       box-shadow:
-        0 20px 55px
-        rgba(15, 23, 42, 0.16);
+        0 20px 55px rgba(15, 23, 42, 0.16);
     }
 
 
@@ -275,10 +263,6 @@
     ========================= */
 
     .calendar-shield {
-      display: none;
-    }
-
-    .calendar-use-hint {
       display: none;
     }
 
@@ -303,205 +287,110 @@
 
 
       .calendar-frame {
-        height:
-          650px;
+        height: 650px;
       }
 
 
       .calendar-tabs {
-        position:
-          sticky;
+        position: sticky;
 
-        top:
-          10px;
+        top: 10px;
 
-        z-index:
-          30;
+        z-index: 30;
 
-        backdrop-filter:
-          blur(12px);
+        backdrop-filter: blur(12px);
 
-        -webkit-backdrop-filter:
-          blur(12px);
+        -webkit-backdrop-filter: blur(12px);
       }
 
 
       .calendar-mobile-wrapper {
-        position:
-          relative;
+        position: relative;
       }
 
 
       /*
-        Transparent layer over the entire
-        Google Calendar on mobile.
+        Transparent shield over Google Calendar.
+
+        Vertical swipes move the webpage.
+        A normal tap activates the calendar.
       */
 
       .calendar-shield {
-        display:
-          block;
+        display: block;
 
-        position:
-          absolute;
+        position: absolute;
 
-        inset:
-          0;
+        inset: 0;
 
-        z-index:
-          20;
+        z-index: 20;
 
-        background:
-          transparent;
+        background: transparent;
 
-        touch-action:
-          pan-y;
+        touch-action: pan-y;
 
-        -webkit-user-select:
-          none;
+        -webkit-user-select: none;
 
-        user-select:
-          none;
+        user-select: none;
 
-        -webkit-tap-highlight-color:
-          transparent;
+        -webkit-tap-highlight-color: transparent;
       }
 
 
       /*
-        Remove shield once calendar
-        interaction is enabled.
+        Remove the shield once the calendar
+        has been activated.
       */
 
       .calendar-mobile-wrapper.calendar-active
       .calendar-shield {
-        opacity:
-          0;
+        opacity: 0;
 
-        pointer-events:
-          none;
-      }
-
-
-      /* TAP TO USE CALENDAR PILL */
-
-      .calendar-use-hint {
-        display:
-          inline-flex;
-
-        position:
-          absolute;
-
-        top:
-          14px;
-
-        left:
-          50%;
-
-        transform:
-          translateX(-50%);
-
-        align-items:
-          center;
-
-        gap:
-          7px;
-
-        padding:
-          10px 15px;
-
-        border-radius:
-          9999px;
-
-        background:
-          rgba(11, 42, 91, 0.94);
-
-        color:
-          white;
-
-        font-size:
-          12px;
-
-        font-weight:
-          800;
-
-        white-space:
-          nowrap;
-
-        pointer-events:
-          none;
-
-        box-shadow:
-          0 8px 24px
-          rgba(15, 23, 42, 0.25);
-
-        backdrop-filter:
-          blur(8px);
-
-        -webkit-backdrop-filter:
-          blur(8px);
+        pointer-events: none;
       }
 
 
       /*
-        Fixed Done button so users
-        can escape calendar interaction.
+        Fixed Done button so users can
+        leave calendar interaction mode.
       */
 
       #calendarDoneButton.visible {
-        display:
-          flex;
+        display: flex;
 
-        position:
-          fixed;
+        position: fixed;
 
-        left:
-          50%;
+        left: 50%;
+        bottom: 24px;
 
-        bottom:
-          24px;
+        transform: translateX(-50%);
 
-        transform:
-          translateX(-50%);
+        z-index: 9999;
 
-        z-index:
-          9999;
+        align-items: center;
+        justify-content: center;
 
-        align-items:
-          center;
-
-        justify-content:
-          center;
-
-        gap:
-          7px;
+        gap: 7px;
 
         padding:
           12px 20px;
 
-        border-radius:
-          9999px;
+        border-radius: 9999px;
 
-        background:
-          #071d49;
+        background: #071d49;
 
-        color:
-          white;
+        color: white;
 
-        font-size:
-          13px;
+        font-size: 13px;
+        font-weight: 800;
 
-        font-weight:
-          800;
-
-        white-space:
-          nowrap;
+        white-space: nowrap;
 
         border:
           2px solid white;
 
         box-shadow:
-          0 12px 35px
-          rgba(15, 23, 42, 0.35);
+          0 12px 35px rgba(15, 23, 42, 0.35);
       }
     }
   </style>
@@ -1022,14 +911,48 @@
                 Local 2024 Calendar
               </p>
 
-              <p
+
+              <div
                 class="
-                  text-xs
-                  text-slate-400
+                  flex
+                  items-center
+                  gap-2
+                  mt-0.5
                 "
               >
-                Eastern Time
-              </p>
+
+                <p
+                  class="
+                    text-xs
+                    text-slate-400
+                  "
+                >
+                  Eastern Time
+                </p>
+
+
+                <span
+                  class="
+                    sm:hidden
+                    text-slate-300
+                  "
+                >
+                  •
+                </span>
+
+
+                <p
+                  class="
+                    sm:hidden
+                    text-xs
+                    font-semibold
+                    text-blue-600
+                  "
+                >
+                  Tap calendar to interact
+                </p>
+
+              </div>
 
             </div>
 
@@ -1084,41 +1007,7 @@
           <div
             class="calendar-shield"
             aria-label="Tap to interact with calendar"
-          >
-
-            <div
-              class="calendar-use-hint"
-            >
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-
-                <path
-                  d="M9 11V6a2 2 0 0 1 4 0v5"
-                ></path>
-
-                <path
-                  d="M13 10V5a2 2 0 0 1 4 0v6"
-                ></path>
-
-                <path
-                  d="M17 10V7a2 2 0 0 1 4 0v7a8 8 0 0 1-8 8h-1"
-                ></path>
-
-              </svg>
-
-              Tap to use calendar
-
-            </div>
-
-          </div>
+          ></div>
 
 
 
@@ -1189,41 +1078,7 @@
           <div
             class="calendar-shield"
             aria-label="Tap to interact with calendar"
-          >
-
-            <div
-              class="calendar-use-hint"
-            >
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-
-                <path
-                  d="M9 11V6a2 2 0 0 1 4 0v5"
-                ></path>
-
-                <path
-                  d="M13 10V5a2 2 0 0 1 4 0v6"
-                ></path>
-
-                <path
-                  d="M17 10V7a2 2 0 0 1 4 0v7a8 8 0 0 1-8 8h-1"
-                ></path>
-
-              </svg>
-
-              Tap to use calendar
-
-            </div>
-
-          </div>
+          ></div>
 
 
 
