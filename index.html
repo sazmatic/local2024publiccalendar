@@ -24,22 +24,31 @@
     body {
       font-family: "Inter", sans-serif;
       background-color: #f6f8fc;
+
       background-image:
         radial-gradient(
           circle at 1px 1px,
           rgba(15, 23, 42, 0.035) 1px,
           transparent 0
         );
+
       background-size: 26px 26px;
     }
 
-    /* CALENDAR */
+
+    /* =========================
+       GOOGLE CALENDAR
+    ========================= */
+
     .calendar-frame {
       width: 100%;
       height: 760px;
       border: 0;
       display: block;
     }
+
+
+    /* LOADING SCREEN */
 
     .calendar-loader {
       position: absolute;
@@ -72,11 +81,19 @@
       }
     }
 
+
+    /* CALENDAR VIEW TOGGLE */
+
     .tab-active {
       background: #0b2a5b;
       color: white;
-      box-shadow: 0 8px 20px rgba(11, 42, 91, 0.15);
+
+      box-shadow:
+        0 8px 20px rgba(11, 42, 91, 0.15);
     }
+
+
+    /* CALENDAR SWITCH ANIMATION */
 
     .calendar-panel {
       animation: calendarFade 0.3s ease;
@@ -94,7 +111,9 @@
       }
     }
 
-    /* BLUE ACCENT ON TOP OF CALENDAR */
+
+    /* BLUE ACCENT */
+
     .calendar-glow {
       position: relative;
     }
@@ -107,16 +126,23 @@
       width: 84%;
       height: 3px;
       border-radius: 9999px;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(37, 99, 235, 0.85),
-        transparent
-      );
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(37, 99, 235, 0.85),
+          transparent
+        );
+
       z-index: 10;
     }
 
-    /* TABLE WITH US CARD */
+
+    /* =========================
+       TABLE WITH US
+    ========================= */
+
     .table-card {
       transition:
         transform 0.25s ease,
@@ -125,10 +151,16 @@
 
     .table-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 20px 55px rgba(15, 23, 42, 0.16);
+
+      box-shadow:
+        0 20px 55px rgba(15, 23, 42, 0.16);
     }
 
-    /* BACK TO TOP */
+
+    /* =========================
+       BACK TO TOP
+    ========================= */
+
     #backToTop {
       transition:
         opacity 0.25s ease,
@@ -136,82 +168,203 @@
         background-color 0.2s ease;
     }
 
-    /* MOBILE CALENDAR INTERACTION BUTTON */
-    .calendar-interaction-button {
+
+    /* =========================
+       MOBILE CALENDAR SHIELD
+    ========================= */
+
+    /*
+      Hidden on desktop.
+
+      On iPhone/mobile, this transparent layer
+      PHYSICALLY sits over Google Calendar.
+
+      That means Safari never receives the
+      swipe inside the iframe unless the user
+      intentionally activates the calendar.
+    */
+
+    .calendar-shield {
       display: none;
     }
 
+    .calendar-use-hint {
+      display: none;
+    }
+
+    #calendarDoneButton {
+      display: none;
+    }
+
+
     @media (max-width: 640px) {
+
       .calendar-frame {
         height: 650px;
       }
+
+
+      /* Sticky Upcoming / Full Calendar controls */
 
       .calendar-tabs {
         position: sticky;
         top: 10px;
         z-index: 30;
+
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
       }
 
+
+      .calendar-mobile-wrapper {
+        position: relative;
+      }
+
+
       /*
-        This prevents Google Calendar from stealing
-        normal page scrolling on mobile.
+        THIS IS THE IMPORTANT PART.
+
+        The shield covers every pixel of the iframe.
       */
-      .calendar-mobile-wrapper iframe {
+
+      .calendar-shield {
+        display: block;
+
+        position: absolute;
+        inset: 0;
+
+        z-index: 20;
+
+        background: transparent;
+
+        /*
+          Tell Safari vertical gestures here
+          belong to normal browser scrolling.
+        */
+        touch-action: pan-y;
+
+        -webkit-user-select: none;
+        user-select: none;
+
+        -webkit-tap-highlight-color: transparent;
+      }
+
+
+      /*
+        When calendar mode is activated,
+        remove the shield.
+      */
+
+      .calendar-mobile-wrapper.calendar-active
+      .calendar-shield {
+        opacity: 0;
         pointer-events: none;
       }
 
-      .calendar-mobile-wrapper.calendar-active iframe {
-        pointer-events: auto;
+
+      /*
+        Small visual reminder at the top.
+        It DOES NOT block scrolling separately.
+        It's inside the shield.
+      */
+
+      .calendar-use-hint {
+        display: inline-flex;
+
+        position: absolute;
+
+        top: 14px;
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        align-items: center;
+        gap: 7px;
+
+        padding: 10px 15px;
+
+        border-radius: 9999px;
+
+        background: rgba(11, 42, 91, 0.94);
+        color: white;
+
+        font-size: 12px;
+        font-weight: 800;
+
+        white-space: nowrap;
+
+        pointer-events: none;
+
+        box-shadow:
+          0 8px 24px rgba(15, 23, 42, 0.25);
+
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
       }
 
-      .calendar-interaction-button {
+
+      /*
+        Once the calendar is activated,
+        this button stays FIXED on the phone.
+
+        So there is always an escape button
+        even if Google Calendar itself scrolls.
+      */
+
+      #calendarDoneButton.visible {
         display: flex;
-        position: absolute;
-        z-index: 25;
+
+        position: fixed;
+
         left: 50%;
-        bottom: 18px;
+        bottom: 24px;
+
         transform: translateX(-50%);
+
+        z-index: 9999;
+
         align-items: center;
         justify-content: center;
         gap: 7px;
-        padding: 11px 17px;
+
+        padding: 12px 20px;
+
         border-radius: 9999px;
-        background: #0b2a5b;
+
+        background: #071d49;
         color: white;
+
         font-size: 13px;
         font-weight: 800;
+
         white-space: nowrap;
-        box-shadow:
-          0 8px 24px rgba(15, 23, 42, 0.25),
-          0 0 0 1px rgba(255, 255, 255, 0.15);
-        transition:
-          transform 0.2s ease,
-          background 0.2s ease,
-          color 0.2s ease;
-      }
 
-      .calendar-interaction-button:active {
-        transform: translateX(-50%) scale(0.97);
-      }
+        border: 2px solid white;
 
-      .calendar-mobile-wrapper.calendar-active
-      .calendar-interaction-button {
-        background: white;
-        color: #0b2a5b;
         box-shadow:
-          0 8px 24px rgba(15, 23, 42, 0.2),
-          0 0 0 1px rgba(15, 23, 42, 0.08);
+          0 12px 35px rgba(15, 23, 42, 0.35);
       }
     }
+
   </style>
 </head>
 
+
 <body class="text-slate-900">
 
-  <!-- HEADER -->
-  <header class="relative overflow-hidden bg-[#071d49] text-white">
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header
+    class="
+      relative
+      overflow-hidden
+      bg-[#071d49]
+      text-white
+    "
+  >
 
     <div
       class="
@@ -226,6 +379,7 @@
       "
     ></div>
 
+
     <div
       class="
         absolute
@@ -239,11 +393,33 @@
       "
     ></div>
 
-    <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-6 sm:py-8">
 
-      <div class="flex items-center justify-between gap-5">
+    <div
+      class="
+        relative
+        max-w-7xl
+        mx-auto
+        px-5
+        sm:px-8
+        py-6
+        sm:py-8
+      "
+    >
+
+      <div
+        class="
+          flex
+          items-center
+          justify-between
+          gap-5
+        "
+      >
+
+
+        <!-- TITLE -->
 
         <div>
+
           <p
             class="
               text-blue-300
@@ -257,6 +433,7 @@
             Events & Calendar
           </p>
 
+
           <h1
             class="
               mt-1
@@ -268,9 +445,13 @@
           >
             Teamsters Local 2024
           </h1>
+
         </div>
 
+
+
         <!-- TABLE WITH US -->
+
         <a
           href="mailto:NFN@JC43.org?subject=Table With Us&body=Hello,%20I%20am%20interested%20in%20tabling%20with%20Teamsters%20Local%202024.%0A%0AName:%20%0ACampus:%20%0APhone%20Number:%20%0A%0AThank%20you!"
           class="
@@ -302,10 +483,21 @@
             stroke="currentColor"
             stroke-width="2"
           >
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M19 8v6M22 11h-6"></path>
+            <path
+              d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+            ></path>
+
+            <circle
+              cx="9"
+              cy="7"
+              r="4"
+            ></circle>
+
+            <path
+              d="M19 8v6M22 11h-6"
+            ></path>
           </svg>
+
 
           <span class="hidden sm:inline">
             Table With Us
@@ -324,13 +516,32 @@
   </header>
 
 
-  <!-- MAIN -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-10">
 
-    <!-- CALENDAR -->
+  <!-- =========================
+       MAIN
+  ========================= -->
+
+  <main
+    class="
+      max-w-7xl
+      mx-auto
+      px-4
+      sm:px-8
+      py-6
+      sm:py-10
+    "
+  >
+
+
+    <!-- =========================
+         CALENDAR
+    ========================= -->
+
     <section>
 
-      <!-- HEADING + TOGGLE -->
+
+      <!-- HEADING -->
+
       <div
         class="
           flex
@@ -343,9 +554,19 @@
         "
       >
 
+
         <div>
 
-          <div class="flex items-center gap-3">
+          <div
+            class="
+              flex
+              items-center
+              gap-3
+            "
+          >
+
+
+            <!-- ICON -->
 
             <div
               class="
@@ -371,11 +592,21 @@
                 stroke-width="2"
               >
                 <path d="M8 2v4M16 2v4"></path>
-                <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+
+                <rect
+                  width="18"
+                  height="18"
+                  x="3"
+                  y="4"
+                  rx="2"
+                ></rect>
+
                 <path d="M3 10h18"></path>
               </svg>
 
             </div>
+
+
 
             <div>
 
@@ -390,6 +621,7 @@
               >
                 Upcoming Events
               </h2>
+
 
               <p
                 id="calendarDescription"
@@ -410,7 +642,9 @@
         </div>
 
 
+
         <!-- UPCOMING / FULL CALENDAR -->
+
         <div
           class="
             calendar-tabs
@@ -441,6 +675,7 @@
             Upcoming
           </button>
 
+
           <button
             id="monthTab"
             type="button"
@@ -464,7 +699,11 @@
       </div>
 
 
-      <!-- CALENDAR CARD -->
+
+      <!-- =========================
+           CALENDAR CARD
+      ========================= -->
+
       <div
         class="
           calendar-glow
@@ -477,7 +716,9 @@
         "
       >
 
-        <!-- CALENDAR TOP BAR -->
+
+        <!-- TOP BAR -->
+
         <div
           class="
             px-5
@@ -491,7 +732,14 @@
           "
         >
 
-          <div class="flex items-center gap-3">
+
+          <div
+            class="
+              flex
+              items-center
+              gap-3
+            "
+          >
 
             <div
               class="
@@ -516,20 +764,41 @@
                 stroke-width="2"
               >
                 <path d="M8 2v4M16 2v4"></path>
-                <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+
+                <rect
+                  width="18"
+                  height="18"
+                  x="3"
+                  y="4"
+                  rx="2"
+                ></rect>
+
                 <path d="M3 10h18"></path>
               </svg>
 
             </div>
 
+
             <div>
-              <p class="font-extrabold text-sm">
+
+              <p
+                class="
+                  font-extrabold
+                  text-sm
+                "
+              >
                 Local 2024 Calendar
               </p>
 
-              <p class="text-xs text-slate-400">
+              <p
+                class="
+                  text-xs
+                  text-slate-400
+                "
+              >
                 Eastern Time
               </p>
+
             </div>
 
           </div>
@@ -546,6 +815,7 @@
               text-slate-400
             "
           >
+
             <span
               class="
                 w-2
@@ -556,12 +826,17 @@
             ></span>
 
             Live
+
           </div>
 
         </div>
 
 
-        <!-- UPCOMING EVENTS -->
+
+        <!-- =========================
+             UPCOMING CALENDAR
+        ========================= -->
+
         <div
           id="agendaCalendar"
           class="
@@ -571,38 +846,63 @@
           "
         >
 
-          <!-- MOBILE INTERACTION BUTTON -->
-          <button
-            type="button"
-            class="calendar-interaction-button"
-            onclick="toggleCalendarInteraction('agendaCalendar', this)"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="15"
-              height="15"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M9 11V6a2 2 0 0 1 4 0v5"></path>
-              <path d="M13 10V5a2 2 0 0 1 4 0v6"></path>
-              <path d="M17 10V7a2 2 0 0 1 4 0v7a8 8 0 0 1-8 8h-1a8 8 0 0 1-7.2-4.5L2.5 13a2 2 0 0 1 3.5-1.9L9 16"></path>
-            </svg>
 
-            <span>Use calendar</span>
-          </button>
+          <!-- MOBILE TOUCH SHIELD -->
+
+          <div
+            class="calendar-shield"
+            aria-label="Tap to interact with calendar"
+          >
+
+            <div
+              class="calendar-use-hint"
+            >
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M9 11V6a2 2 0 0 1 4 0v5"
+                ></path>
+
+                <path
+                  d="M13 10V5a2 2 0 0 1 4 0v6"
+                ></path>
+
+                <path
+                  d="M17 10V7a2 2 0 0 1 4 0v7a8 8 0 0 1-8 8h-1"
+                ></path>
+              </svg>
+
+              Tap to use calendar
+
+            </div>
+
+          </div>
+
 
 
           <!-- LOADER -->
+
           <div
             id="agendaLoader"
             class="calendar-loader"
           >
+
             <div class="text-center">
 
-              <div class="spinner mx-auto"></div>
+              <div
+                class="
+                  spinner
+                  mx-auto
+                "
+              ></div>
 
               <p
                 class="
@@ -616,10 +916,13 @@
               </p>
 
             </div>
+
           </div>
 
 
+
           <!-- GOOGLE CALENDAR -->
+
           <iframe
             src="https://calendar.google.com/calendar/embed?wkst=1&ctz=America%2FDetroit&mode=AGENDA&showTitle=0&showPrint=0&showCalendars=0&showTabs=0&showTz=0&showNav=1&showDate=1&src=OTMxNWE2ZDI0ZGRkOGM2NThkMTU3YTFhYjU0YTM3ZTIwOWQ5MjdjNjcwMjc3NDU3NDliODI4NDI0NTJmOTYyNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23D81B60"
             class="calendar-frame"
@@ -631,7 +934,11 @@
         </div>
 
 
-        <!-- FULL MONTH CALENDAR -->
+
+        <!-- =========================
+             FULL MONTH CALENDAR
+        ========================= -->
+
         <div
           id="monthCalendar"
           class="
@@ -641,38 +948,63 @@
           "
         >
 
-          <!-- MOBILE INTERACTION BUTTON -->
-          <button
-            type="button"
-            class="calendar-interaction-button"
-            onclick="toggleCalendarInteraction('monthCalendar', this)"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="15"
-              height="15"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M9 11V6a2 2 0 0 1 4 0v5"></path>
-              <path d="M13 10V5a2 2 0 0 1 4 0v6"></path>
-              <path d="M17 10V7a2 2 0 0 1 4 0v7a8 8 0 0 1-8 8h-1a8 8 0 0 1-7.2-4.5L2.5 13a2 2 0 0 1 3.5-1.9L9 16"></path>
-            </svg>
 
-            <span>Use calendar</span>
-          </button>
+          <!-- MOBILE TOUCH SHIELD -->
+
+          <div
+            class="calendar-shield"
+            aria-label="Tap to interact with calendar"
+          >
+
+            <div
+              class="calendar-use-hint"
+            >
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M9 11V6a2 2 0 0 1 4 0v5"
+                ></path>
+
+                <path
+                  d="M13 10V5a2 2 0 0 1 4 0v6"
+                ></path>
+
+                <path
+                  d="M17 10V7a2 2 0 0 1 4 0v7a8 8 0 0 1-8 8h-1"
+                ></path>
+              </svg>
+
+              Tap to use calendar
+
+            </div>
+
+          </div>
+
 
 
           <!-- LOADER -->
+
           <div
             id="monthLoader"
             class="calendar-loader"
           >
+
             <div class="text-center">
 
-              <div class="spinner mx-auto"></div>
+              <div
+                class="
+                  spinner
+                  mx-auto
+                "
+              ></div>
 
               <p
                 class="
@@ -686,10 +1018,13 @@
               </p>
 
             </div>
+
           </div>
 
 
+
           <!-- GOOGLE CALENDAR -->
+
           <iframe
             src="https://calendar.google.com/calendar/embed?wkst=1&ctz=America%2FDetroit&mode=MONTH&showTitle=0&showPrint=0&showCalendars=0&showTabs=0&showTz=0&showNav=1&showDate=1&src=OTMxNWE2ZDI0ZGRkOGM2NThkMTU3YTFhYjU0YTM3ZTIwOWQ5MjdjNjcwMjc3NDU3NDliODI4NDI0NTJmOTYyNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23D81B60"
             class="calendar-frame"
@@ -705,8 +1040,17 @@
     </section>
 
 
-    <!-- TABLE WITH US -->
-    <section class="mt-8 sm:mt-10">
+
+    <!-- =========================
+         TABLE WITH US
+    ========================= -->
+
+    <section
+      class="
+        mt-8
+        sm:mt-10
+      "
+    >
 
       <div
         class="
@@ -722,6 +1066,7 @@
         "
       >
 
+
         <div
           class="
             absolute
@@ -734,6 +1079,7 @@
             blur-3xl
           "
         ></div>
+
 
         <div
           class="
@@ -749,6 +1095,7 @@
         ></div>
 
 
+
         <div
           class="
             relative
@@ -760,6 +1107,7 @@
             gap-6
           "
         >
+
 
           <div>
 
@@ -775,6 +1123,7 @@
               Get involved
             </p>
 
+
             <h2
               class="
                 mt-2
@@ -785,6 +1134,7 @@
             >
               Come table with us.
             </h2>
+
 
             <p
               class="
@@ -799,6 +1149,7 @@
             </p>
 
           </div>
+
 
 
           <a
@@ -823,6 +1174,7 @@
               transition
             "
           >
+
             Table With Us
 
             <svg
@@ -834,8 +1186,11 @@
               stroke="currentColor"
               stroke-width="2"
             >
-              <path d="m9 18 6-6-6-6"></path>
+              <path
+                d="m9 18 6-6-6-6"
+              ></path>
             </svg>
+
           </a>
 
         </div>
@@ -847,8 +1202,18 @@
   </main>
 
 
-  <!-- FOOTER -->
-  <footer class="mt-12 bg-[#061936] text-white">
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer
+    class="
+      mt-12
+      bg-[#061936]
+      text-white
+    "
+  >
 
     <div
       class="
@@ -861,6 +1226,7 @@
       "
     >
 
+
       <div
         class="
           grid
@@ -869,6 +1235,7 @@
           items-start
         "
       >
+
 
         <div>
 
@@ -884,6 +1251,7 @@
             Local 2024 Events
           </p>
 
+
           <p
             class="
               mt-2
@@ -894,6 +1262,7 @@
           >
             TEAMSTERS LOCAL 2024
           </p>
+
 
           <p
             class="
@@ -908,11 +1277,25 @@
         </div>
 
 
-        <div class="md:flex md:justify-end">
 
-          <div class="flex flex-wrap gap-3">
+        <div
+          class="
+            md:flex
+            md:justify-end
+          "
+        >
+
+          <div
+            class="
+              flex
+              flex-wrap
+              gap-3
+            "
+          >
+
 
             <!-- FACEBOOK -->
+
             <a
               href="https://www.facebook.com/share/g/1AxqftZkxu/?mibextid=wwXIfr"
               target="_blank"
@@ -931,24 +1314,13 @@
                 transition
               "
             >
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M22.675 0h-21.35C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.127V8.413c0-3.1 1.894-4.788 4.658-4.788 1.325 0 2.463.099 2.793.143v3.236h-1.916c-1.504 0-1.796.715-1.796 1.763v2.31h3.59l-.467 3.622h-3.123V24h6.116c.729 0 1.324-.593 1.324-1.324V1.325C24 .593 23.407 0 22.675 0z"
-                />
-              </svg>
-
               Facebook
             </a>
 
 
+
             <!-- EMAIL -->
+
             <a
               href="mailto:NFN@JC43.org"
               class="
@@ -965,20 +1337,6 @@
                 transition
               "
             >
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                <path d="m22 7-10 5L2 7"></path>
-              </svg>
-
               Email
             </a>
 
@@ -987,6 +1345,7 @@
         </div>
 
       </div>
+
 
 
       <div
@@ -1021,7 +1380,42 @@
   </footer>
 
 
-  <!-- BACK TO TOP -->
+
+  <!-- =========================
+       CALENDAR DONE BUTTON
+       MOBILE ONLY
+  ========================= -->
+
+  <button
+    id="calendarDoneButton"
+    type="button"
+    onclick="disableCalendarInteraction()"
+  >
+
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="17"
+      height="17"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+    >
+      <path
+        d="m5 12 4 4L19 6"
+      ></path>
+    </svg>
+
+    Done
+
+  </button>
+
+
+
+  <!-- =========================
+       BACK TO TOP
+  ========================= -->
+
   <button
     id="backToTop"
     type="button"
@@ -1057,13 +1451,21 @@
       stroke="currentColor"
       stroke-width="2"
     >
-      <path d="m18 15-6-6-6 6"></path>
+      <path
+        d="m18 15-6-6-6 6"
+      ></path>
     </svg>
 
   </button>
 
 
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
   <script>
+
     const agendaCalendar =
       document.getElementById("agendaCalendar");
 
@@ -1085,170 +1487,368 @@
     const backToTop =
       document.getElementById("backToTop");
 
+    const calendarDoneButton =
+      document.getElementById("calendarDoneButton");
 
-    /*
-      RESTARTS THE LITTLE FADE ANIMATION
-      WHEN SWITCHING VIEWS
-    */
+
+    /* =========================
+       CALENDAR ANIMATION
+    ========================= */
+
     function restartAnimation(element) {
-      element.classList.remove("calendar-panel");
+
+      element.classList.remove(
+        "calendar-panel"
+      );
 
       void element.offsetWidth;
 
-      element.classList.add("calendar-panel");
+      element.classList.add(
+        "calendar-panel"
+      );
+
     }
 
 
+    /* =========================
+       ACTIVATE MOBILE CALENDAR
+    ========================= */
+
+    function enableCalendarInteraction(wrapper) {
+
+      /*
+        Only one calendar can be active.
+      */
+
+      document
+        .querySelectorAll(".calendar-mobile-wrapper")
+        .forEach((item) => {
+
+          item.classList.remove(
+            "calendar-active"
+          );
+
+        });
+
+
+      wrapper.classList.add(
+        "calendar-active"
+      );
+
+
+      calendarDoneButton.classList.add(
+        "visible"
+      );
+
+
+      /*
+        Hide back-to-top while using calendar
+        so the buttons don't overlap.
+      */
+
+      backToTop.style.display = "none";
+
+    }
+
+
+    /* =========================
+       EXIT MOBILE CALENDAR
+    ========================= */
+
+    function disableCalendarInteraction() {
+
+      document
+        .querySelectorAll(".calendar-mobile-wrapper")
+        .forEach((wrapper) => {
+
+          wrapper.classList.remove(
+            "calendar-active"
+          );
+
+        });
+
+
+      calendarDoneButton.classList.remove(
+        "visible"
+      );
+
+
+      backToTop.style.display = "";
+
+    }
+
+
+    /* =========================
+       MOBILE SHIELD TAP DETECTION
+    ========================= */
+
     /*
-      RESETS MOBILE CALENDAR INTERACTION.
+      IMPORTANT:
 
-      This means if someone taps "Use calendar"
-      and then switches views, the new calendar
-      goes back to normal page-scrolling mode.
+      A vertical swipe should scroll the page.
+
+      A simple tap activates Google Calendar.
+
+      We track finger movement so a swipe
+      doesn't accidentally activate it.
     */
-    function resetCalendarInteraction() {
-      const wrappers =
-        document.querySelectorAll(".calendar-mobile-wrapper");
 
-      wrappers.forEach((wrapper) => {
-        wrapper.classList.remove("calendar-active");
+    document
+      .querySelectorAll(".calendar-shield")
+      .forEach((shield) => {
 
-        const button =
-          wrapper.querySelector(".calendar-interaction-button");
+        let startX = 0;
+        let startY = 0;
+        let moved = false;
 
-        if (button) {
-          const label = button.querySelector("span");
 
-          if (label) {
-            label.textContent = "Use calendar";
+        shield.addEventListener(
+          "pointerdown",
+          (event) => {
+
+            startX = event.clientX;
+            startY = event.clientY;
+
+            moved = false;
+
           }
-        }
+        );
+
+
+        shield.addEventListener(
+          "pointermove",
+          (event) => {
+
+            const distanceX =
+              Math.abs(
+                event.clientX - startX
+              );
+
+            const distanceY =
+              Math.abs(
+                event.clientY - startY
+              );
+
+
+            if (
+              distanceX > 8 ||
+              distanceY > 8
+            ) {
+
+              moved = true;
+
+            }
+
+          }
+        );
+
+
+        shield.addEventListener(
+          "pointerup",
+          () => {
+
+            /*
+              Only activate if this was
+              actually a TAP, not a swipe.
+            */
+
+            if (!moved) {
+
+              const wrapper =
+                shield.closest(
+                  ".calendar-mobile-wrapper"
+                );
+
+
+              enableCalendarInteraction(
+                wrapper
+              );
+
+            }
+
+          }
+        );
+
       });
-    }
 
 
-    /*
-      MOBILE ONLY:
-      ENABLE / DISABLE GOOGLE CALENDAR TOUCH CONTROL
-    */
-    function toggleCalendarInteraction(wrapperId, button) {
-      const wrapper =
-        document.getElementById(wrapperId);
+    /* =========================
+       SWITCH CALENDAR VIEW
+    ========================= */
 
-      const label =
-        button.querySelector("span");
-
-      const isActive =
-        wrapper.classList.toggle("calendar-active");
-
-      if (isActive) {
-        label.textContent = "Done";
-      } else {
-        label.textContent = "Use calendar";
-      }
-    }
-
-
-    /*
-      UPCOMING / FULL CALENDAR TOGGLE
-    */
     function showCalendar(type) {
-      resetCalendarInteraction();
+
+      disableCalendarInteraction();
+
 
       if (type === "month") {
 
-        agendaCalendar.classList.add("hidden");
-        monthCalendar.classList.remove("hidden");
+        agendaCalendar.classList.add(
+          "hidden"
+        );
 
-        restartAnimation(monthCalendar);
+        monthCalendar.classList.remove(
+          "hidden"
+        );
 
-        agendaTab.classList.remove("tab-active");
-        agendaTab.classList.add("text-slate-600");
 
-        monthTab.classList.add("tab-active");
-        monthTab.classList.remove("text-slate-600");
+        restartAnimation(
+          monthCalendar
+        );
+
+
+        agendaTab.classList.remove(
+          "tab-active"
+        );
+
+        agendaTab.classList.add(
+          "text-slate-600"
+        );
+
+
+        monthTab.classList.add(
+          "tab-active"
+        );
+
+        monthTab.classList.remove(
+          "text-slate-600"
+        );
+
 
         heading.textContent =
           "Full Calendar";
 
+
         description.textContent =
           "Browse all Local 2024 events.";
 
-      } else {
+      }
 
-        monthCalendar.classList.add("hidden");
-        agendaCalendar.classList.remove("hidden");
+      else {
 
-        restartAnimation(agendaCalendar);
+        monthCalendar.classList.add(
+          "hidden"
+        );
 
-        monthTab.classList.remove("tab-active");
-        monthTab.classList.add("text-slate-600");
+        agendaCalendar.classList.remove(
+          "hidden"
+        );
 
-        agendaTab.classList.add("tab-active");
-        agendaTab.classList.remove("text-slate-600");
+
+        restartAnimation(
+          agendaCalendar
+        );
+
+
+        monthTab.classList.remove(
+          "tab-active"
+        );
+
+        monthTab.classList.add(
+          "text-slate-600"
+        );
+
+
+        agendaTab.classList.add(
+          "tab-active"
+        );
+
+        agendaTab.classList.remove(
+          "text-slate-600"
+        );
+
 
         heading.textContent =
           "Upcoming Events";
 
+
         description.textContent =
           "See what's happening next.";
+
       }
+
     }
 
 
-    /*
-      HIDE LOADING SCREEN AFTER GOOGLE CALENDAR LOADS
-    */
+    /* =========================
+       CALENDAR LOADER
+    ========================= */
+
     function calendarLoaded(loaderId) {
+
       const loader =
-        document.getElementById(loaderId);
+        document.getElementById(
+          loaderId
+        );
+
 
       if (loader) {
-        loader.classList.add("loaded");
+
+        loader.classList.add(
+          "loaded"
+        );
+
       }
+
     }
 
 
-    /*
-      AUTOMATIC COPYRIGHT YEAR
-    */
-    document.getElementById("year").textContent =
+    /* =========================
+       YEAR
+    ========================= */
+
+    document
+      .getElementById("year")
+      .textContent =
       new Date().getFullYear();
 
 
-    /*
-      BACK TO TOP BUTTON
-    */
-    window.addEventListener("scroll", () => {
+    /* =========================
+       BACK TO TOP
+    ========================= */
 
-      if (window.scrollY > 500) {
+    window.addEventListener(
+      "scroll",
+      () => {
 
-        backToTop.classList.remove(
-          "opacity-0",
-          "pointer-events-none",
-          "translate-y-3"
-        );
+        if (
+          window.scrollY > 500 &&
+          !calendarDoneButton.classList.contains("visible")
+        ) {
 
-        backToTop.classList.add(
-          "opacity-100",
-          "translate-y-0"
-        );
+          backToTop.classList.remove(
+            "opacity-0",
+            "pointer-events-none",
+            "translate-y-3"
+          );
 
-      } else {
 
-        backToTop.classList.add(
-          "opacity-0",
-          "pointer-events-none",
-          "translate-y-3"
-        );
+          backToTop.classList.add(
+            "opacity-100",
+            "translate-y-0"
+          );
 
-        backToTop.classList.remove(
-          "opacity-100",
-          "translate-y-0"
-        );
+        }
+
+        else {
+
+          backToTop.classList.add(
+            "opacity-0",
+            "pointer-events-none",
+            "translate-y-3"
+          );
+
+
+          backToTop.classList.remove(
+            "opacity-100",
+            "translate-y-0"
+          );
+
+        }
+
       }
+    );
 
-    });
   </script>
 
 </body>
