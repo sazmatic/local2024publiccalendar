@@ -4,6 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- =========================
+       MOVED: this calendar now lives at calendar.local2024.org
+       Visitors arriving at any older address are sent there right away.
+       The hostname check keeps the new domain itself from redirecting to
+       itself, and leaves local previews alone.
+  ========================= -->
+  <link rel="canonical" href="https://calendar.local2024.org/" />
+  <script>
+    (function () {
+      var NEW_HOST = "calendar.local2024.org";
+      var host = window.location.hostname;
+
+      if (host === NEW_HOST || host === "localhost" || host === "127.0.0.1" || host === "") {
+        return;
+      }
+
+      window.location.replace("https://" + NEW_HOST + "/" + window.location.hash);
+    })();
+  </script>
+
   <title>Teamsters Local 2024 | Events Calendar</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -489,6 +509,22 @@
 
 
 <body class="text-slate-900">
+
+  <noscript>
+    <div style="
+      padding: 16px;
+      text-align: center;
+      font-family: Inter, sans-serif;
+      font-weight: 600;
+      color: #ffffff;
+      background-color: #1d4ed8;
+    ">
+      This calendar has moved to
+      <a href="https://calendar.local2024.org/" style="color: #ffffff; text-decoration: underline;">
+        calendar.local2024.org
+      </a>
+    </div>
+  </noscript>
 
 
   <!-- =========================
